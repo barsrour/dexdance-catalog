@@ -58,7 +58,7 @@ export default function Home() {
   return (
     <main dir="rtl" className="min-h-screen bg-white px-5 py-6 text-black">
      <header className="sticky top-0 z-50 -mx-5 mb-5 bg-white px-5 py-4 text-center shadow-sm">
-        <img src="/logo.png" alt="dex.dance" className="mx-auto mb-4 w-28" />
+        <img src="/logo.PNG" alt="dex.dance" className="mx-auto mb-4 w-28" />
         <h1 className="text-3xl font-bold text-red-600">קטלוג התלבושות</h1>
         <p className="mt-2 text-sm text-gray-600">
           חיפוש תלבושות לפי צבע, גיל, סוג וסגנון
