@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { costumes, filterOptions } from "@/data/costumes";
 import Link from "next/link";
+import ScrollToTopButton from "@/components/ScrollToTopButton";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -219,13 +220,7 @@ export default function Home() {
   </Link>
 ))}
       </section>
-      <button
-  type="button"
-  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-  className="mx-auto mt-8 block rounded-full bg-red-600 px-6 py-3 text-sm font-bold text-white shadow"
->
-  ↑ חזרה למעלה
-</button>
+      <ScrollToTopButton />
     </main>
   );
 }
