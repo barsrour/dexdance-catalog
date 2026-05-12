@@ -57,7 +57,7 @@ export default function Home() {
 
   return (
     <main dir="rtl" className="min-h-screen bg-white px-5 py-6 text-black">
-     <header className="sticky top-0 z-50 -mx-5 mb-5 bg-white px-5 py-4 text-center shadow-sm">
+    <header className="mb-6 text-center">
         <img src="/logo.PNG" alt="dex.dance" className="mx-auto mb-4 w-28" />
         <h1 className="text-3xl font-bold text-red-600">קטלוג התלבושות</h1>
         <p className="mt-2 text-sm text-gray-600">
@@ -179,21 +179,21 @@ export default function Home() {
   </button>
 </div>
 
-      <section className="grid grid-cols-3 gap-2">
+      <section className="grid grid-cols-2 gap-3">
       {filteredCostumes.map((costume) => (
   <Link
     key={costume.id}
     href={`/costume/${costume.id}`}
     className="rounded-lg border border-gray-200 p-2"
   >
-  <div className="h-24 w-full overflow-x-auto overflow-y-hidden rounded-md">
-  <div className="flex h-24">
+  <div className="h-36 w-full overflow-x-auto overflow-y-hidden rounded-md">
+  <div className="flex h-36">
     {costume.images.map((img, index) => (
       <img
         key={index}
         src={img}
         alt={costume.name}
-        className="h-24 min-w-full flex-shrink-0 object-cover"
+        className="h-36 min-w-full flex-shrink-0 object-cover"
       />
     ))}
   </div>
@@ -211,7 +211,7 @@ export default function Home() {
       </div>
     )}
 
-    <h2 className="mt-2 text-sm font-semibold leading-tight line-clamp-2">
+    <h2 className="mt-2 text-xs font-bold leading-tight line-clamp-2">
       {costume.name}
     </h2>
 
