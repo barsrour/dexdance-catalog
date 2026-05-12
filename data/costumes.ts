@@ -133,7 +133,7 @@ export const costumes: Costume[] = [
   quantity: 32,
   ageRange: ["יסודי צעיר"],
   categories: ["lower"],
-  images: ["/costumes/skirts/skirt-5.jpg","/costumes/skirts/skirt-5.2.jpg","/costumes/skirts/skirt-5.3.jpg","/costumes/skirts/skirt-5.4.jpg"],
+  images: ["/costumes/skirts/skirt-5.JPG","/costumes/skirts/skirt-5.2.JPG","/costumes/skirts/skirt-5.3.JPG","/costumes/skirts/skirt-5.4.JPG"],
   colors: ["שחור","לבן"],
   clothingTypes: ["חצאית"],
   styles: ["ג׳אז","מודרני"],
