@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { costumes, filterOptions } from "@/data/costumes";
 import Link from "next/link";
+import ScrollToTopButton from "@/components/ScrollToTopButton";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -219,6 +220,7 @@ export default function Home() {
   </Link>
 ))}
       </section>
+      <ScrollToTopButton />
     </main>
   );
 }
