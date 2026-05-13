@@ -774,7 +774,7 @@ export const costumes: Costume[] = [
   quantity: 30,
   ageRange: ["יסודי מתקדם", " , ", "חטיבה-תיכון"],
   categories: ["upper","jackets"],
-  images: ["/costumes/jackets/jacket-4.jpg","/costumes/jackets/jacket-4.2.jpg"],
+  images: ["/costumes/jackets/jacket-4.2.jpg","/costumes/jackets/jacket-4.jpg"],
   colors: ["שחור","אדום"],
   clothingTypes: ["ג׳קט"],
   styles: ["ג׳אז","היפ הופ"],
