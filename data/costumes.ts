@@ -3,12 +3,14 @@ export type CategoryId =
   | "bodysuits"
   | "tops"
   | "shirts"
-  | "vests-jackets"
+  | "vests"
+  | "jackets"
   | "lower"
   | "pants"
   | "skirts"
   | "dresses"
   | "overol"
+  | "leggings"
   | "sets";
 
 export type Costume = {
@@ -43,6 +45,7 @@ export const categories = [
     subCategories: [
       { id: "pants", name: "מכנסיים" },
       { id: "skirts", name: "חצאיות" },
+      { id: "leggings", name: "טייצים" },
     ],
   },
   {
@@ -68,6 +71,7 @@ export const filterOptions = {
     "וסט",
     "ג׳קט",
     "מכנס",
+    "טייץ",
     "חצאית",
     "שמלה",
     "סט",
@@ -275,6 +279,18 @@ export const costumes: Costume[] = [
   styles: ["ג׳אז"],
   searchKeywords: ["חצאית","שחור","אורגנזה"],
 },
+{
+  id: "lev-skirt",
+  name: "חצי חצאית ויניל אדום שחור",
+  quantity: 22,
+  ageRange: ["יסודי מתקדם", " , ", "חטיבה-תיכון"],
+  categories: ["lower","skirts"],
+  images: ["/costumes/jackets/jacket-4.jpg"],
+  colors: ["שחור","אדום"],
+  clothingTypes: ["חצאית"],
+  styles: ["ג׳אז","היפ הופ"],
+  searchKeywords: ["חצאית","אדום","שחור"],
+},
 //גופיות
 {
   id: "red-tank-top",
@@ -304,6 +320,18 @@ export const costumes: Costume[] = [
 },
 
 //בגדי גוף
+{
+  id: "white-bodysuit",
+  name: "בגד גוף סטן לבן שרוולים תפוחים",
+  quantity: 28,
+  ageRange: ["יסודי צעיר"," , ","קטנטנות"],
+  categories: ["upper","bodysuits"],
+  images: ["/costumes/skirts/skirt-5.JPG","/costumes/skirts/skirt-5.4.JPG"],
+  colors: ["לבן"],
+  clothingTypes: ["בגד גוף"],
+  styles: ["ג׳אז","מודרני"],
+  searchKeywords: ["בגד גוף", "לבן", "סטן"],
+},
 {
   id: "pink-leotard-skirt",
   name: "בגד גוף- חצאית ורוד",
@@ -343,7 +371,7 @@ export const costumes: Costume[] = [
 {
   id: "green-bodysuit",
   name: "בגד גוף- חצאית ירוק ארוך",
-  quantity: 33,
+  quantity: 38,
   ageRange: ["קטנטנות"],
   categories: ["upper","bodysuits","skirts"],
   images: ["/costumes/bodysuits/bodysuit-3.jpg"],
@@ -701,5 +729,105 @@ export const costumes: Costume[] = [
   clothingTypes: ["אוברול"],
   styles: ["ג׳אז"],
   searchKeywords: ["אוברול","כתום","חום"],
+},
+
+//ג׳קטים
+{
+  id: "yellow-jacket",
+  name: "ג׳קט קטיפה צהוב",
+  quantity: 28,
+  ageRange: ["יסודי צעיר"],
+  categories: ["upper","jackets"],
+  images: ["/costumes/jackets/jacket-1.JPG"],
+  colors: ["צהוב"],
+  clothingTypes: ["ג׳קט"],
+  styles: ["ג׳אז","היפ הופ"],
+  searchKeywords: ["ג׳קט","צהוב","קטיפה"],
+},
+{
+  id: "black-white-jacket",
+  name: "ג׳קט שחור לבן",
+  quantity: 36,
+  ageRange: ["יסודי מתקדם"],
+  categories: ["upper","jackets"],
+  images: ["/costumes/jackets/jacket-2.jpg","/costumes/leggings/legging-2.JPG"],
+  colors: ["שחור"],
+  clothingTypes: ["ג׳קט"],
+  styles: ["ג׳אז","היפ הופ"],
+  searchKeywords: ["ג׳קט","שחור","לבן"],
+},
+{
+  id: "bordo-jacket",
+  name: "ג׳קט בורדו צבעוני",
+  quantity: 19,
+  ageRange: ["חטיבה-תיכון"],
+  categories: ["upper","jackets"],
+  images: ["/costumes/jackets/jacket-3.JPG","/costumes/leggings/legging-2.2.JPG"],
+  colors: ["אדום","צבעוני"],
+  clothingTypes: ["ג׳קט"],
+  styles: ["ג׳אז","היפ הופ"],
+  searchKeywords: ["ג׳קט","אדום"],
+},
+{
+  id: "lev-jacket",
+  name: "ג׳קט ויניל אדום שחור",
+  quantity: 30,
+  ageRange: ["יסודי מתקדם", " , ", "חטיבה-תיכון"],
+  categories: ["upper","jackets"],
+  images: ["/costumes/jackets/jacket-4.jpg","/costumes/jackets/jacket-4.2.jpg"],
+  colors: ["שחור","אדום"],
+  clothingTypes: ["ג׳קט"],
+  styles: ["ג׳אז","היפ הופ"],
+  searchKeywords: ["ג׳קט","אדום","שחור"],
+},
+
+//טייצים
+{
+  id: "meuyanim-legging",
+  name: "טייץ מעויינים שחור לבן",
+  quantity: 27,
+  ageRange: ["יסודי מתקדם", " , ", "חטיבה-תיכון"],
+  categories: ["lower","leggings"],
+  images: ["/costumes/jackets/jacket-4.jpg"],
+  colors: ["שחור","לבן"],
+  clothingTypes: ["טייץ"],
+  styles: ["ג׳אז","היפ הופ"],
+  searchKeywords: ["טייץ","לבן","שחור"],
+},
+{
+  id: "meuyanim-legging",
+  name: "טייץ מעויינים שחור לבן",
+  quantity: 27,
+  ageRange: ["יסודי מתקדם", " , ", "חטיבה-תיכון"],
+  categories: ["lower","leggings"],
+  images: ["/costumes/leggings/legging-1.JPG"],
+  colors: ["שחור","לבן"],
+  clothingTypes: ["טייץ"],
+  styles: ["ג׳אז","היפ הופ"],
+  searchKeywords: ["טייץ","לבן","שחור"],
+},
+{
+  id: "bordo-legging",
+  name: "טייץ בורדו ארוך",
+  quantity: 38,
+  ageRange: ["יסודי מתקדם", " , ", "חטיבה-תיכון"],
+  categories: ["lower","leggings"],
+  images: ["/costumes/leggings/legging-2.JPG","/costumes/leggings/legging-2.2.JPG"],
+  colors: ["בורדו"],
+  clothingTypes: ["טייץ"],
+  styles: ["ג׳אז"],
+  searchKeywords: ["טייץ","בורדו"],
+},
+{
+  id: "green-legging",
+  name: "טייץ ירוק ארוך",
+  quantity: 38,
+  ageRange: ["יסודי צעיר"],
+  categories: ["lower","leggings"],
+  images: ["/costumes/leggings/legging-4.jpg"],
+  colors: ["ירוק"],
+  clothingTypes: ["טייץ"],
+  styles: ["ג׳אז","היפ הופ"],
+  searchKeywords: ["טייץ","ירוק"],
 },
 ];
