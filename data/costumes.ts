@@ -8,6 +8,7 @@ export type CategoryId =
   | "pants"
   | "skirts"
   | "dresses"
+  | "overol"
   | "sets";
 
 export type Costume = {
@@ -33,6 +34,7 @@ export const categories = [
       { id: "tops", name: "טופים" },
       { id: "shirts", name: "גופיות וחולצות" },
       { id: "vests-jackets", name: "וסטים וג׳קטים" },
+      { id: "overol", name: "אוברול" },
     ],
   },
   {
@@ -69,6 +71,7 @@ export const filterOptions = {
     "חצאית",
     "שמלה",
     "סט",
+    "אוברול"
   ],
   styles: [
     "מודרני",
@@ -164,13 +167,24 @@ export const costumes: Costume[] = [
   styles: ["לירי","מודרני"],
   searchKeywords: ["חצאית מנומרת", "שיפון", "מנומר", "חצאית"],
 },
-
+{
+  id: "white-saten-skirt",
+  name: "חצי חצאית סטן לבנה",
+  quantity: 18,
+  ageRange: ["חטיבה-תיכון"],
+  categories: ["lower","skirts"],
+  images: ["/costumes/bodysuit/bodysuit-5.2.jpg","/costumes/bodysuit/bodysuit-5.jpg"],
+  colors: ["לבן"],
+  clothingTypes: ["חצאית"],
+  styles: ["לירי"],
+  searchKeywords: ["חצאית","לבן","סטן"],
+},
 //גופיות
 {
   id: "red-tank-top",
   name: "גופיה אדומה מנצנצת",
   quantity: 18,
-  ageRange: ["קטנטנים"],
+  ageRange: ["קטנטנות"],
   categories: ["upper","tops"],
   images: ["/costumes/tankTops/tank-1.jpg","/costumes/tankTops/tank-1.2.jpg"],
   colors: ["אדום"],
@@ -184,7 +198,7 @@ export const costumes: Costume[] = [
   id: "white-botton-up-shirt",
   name: "חולצה מכופתרת לבנה קצרה",
   quantity: 36,
-  ageRange: ["חטיבה-תיכון","יסודי מתקדם"],
+  ageRange: ["חטיבה-תיכון"," ","יסודי מתקדם"],
   categories: ["upper","shirts"],
   images: ["/costumes/skirts/skirt-1.jpg","/costumes/skirts/skirt-2.jpg"],
   colors: ["לבן"],
@@ -198,7 +212,7 @@ export const costumes: Costume[] = [
   id: "pink-leotard-skirt",
   name: "בגד גוף- חצאית ורוד",
   quantity: 22,
-  ageRange: ["קטנטנים"],
+  ageRange: ["קטנטנות"],
   categories: ["upper","bodysuits","skirts"],
   images: ["/costumes/skirts/skirt-3.2.jpg"],
   colors: ["ורוד"],
@@ -222,12 +236,74 @@ export const costumes: Costume[] = [
   id: "white-bodysuit",
   name: "בגד גוף סטן לבן שרוולים תפוחים",
   quantity: 28,
-  ageRange: ["יסודי צעיר","קטנטנות"],
+  ageRange: ["יסודי צעיר"," ","קטנטנות"],
   categories: ["upper","bodysuits"],
   images: ["/costumes/skirts/skirt-5.JPG","/costumes/skirts/skirt-5.4.JPG"],
   colors: ["לבן"],
   clothingTypes: ["בגד גוף"],
   styles: ["ג׳אז","מודרני"],
   searchKeywords: ["בגד גוף", "לבן", "סטן"],
+},
+{
+  id: "pink-bodysuit",
+  name: "בגד גוף ורוד תחרה",
+  quantity: 12,
+  ageRange: ["חטיבה-תיכון"],
+  categories: ["upper","bodysuits"],
+  images: ["/costumes/bodysuit/bodysuit-2.jpg"],
+  colors: ["ורוד"],
+  clothingTypes: ["בגד גוף"],
+  styles: ["לירי","מודרני"],
+  searchKeywords: ["בגד גוף", "ורוד", "תחרה"],
+},
+{
+  id: "silver-bodysuit",
+  name: "בגד גוף ארוך כסוף",
+  quantity: 24,
+  ageRange: ["קטנטנות"],
+  categories: ["upper","bodysuits"],
+  images: ["/costumes/bodysuit/bodysuit-4.jpg"],
+  colors: ["כסף"],
+  clothingTypes: ["בגד גוף"],
+  styles: ["ג׳אז"],
+  searchKeywords: ["בגד גוף","חצאית","כסף"],
+},
+{
+  id: "green-bodysuit",
+  name: "בגד גוף- חצאית ירוק ארוך",
+  quantity: 33,
+  ageRange: ["קטנטנות"],
+  categories: ["upper","bodysuits","skirts"],
+  images: ["/costumes/bodysuit/bodysuit-3.jpg"],
+  colors: ["ירוק"],
+  clothingTypes: ["בגד גוף", "חצאית"],
+  styles: ["ג׳אז"],
+  searchKeywords: ["בגד גוף","חצאית","ירוק","עלים"],
+},
+{
+  id: "white-bodysuit",
+  name: "בגד גוף לבן ארוך גב פתוח",
+  quantity: 18,
+  ageRange: ["חטיבה-תיכון"],
+  categories: ["upper","bodysuits"],
+  images: ["/costumes/bodysuit/bodysuit-5.jpg","/costumes/bodysuit/bodysuit-5.2.jpg"],
+  colors: ["לבן"],
+  clothingTypes: ["בגד גוף"],
+  styles: ["לירי"],
+  searchKeywords: ["בגד גוף","לבן","גב פתוח"],
+},
+
+//אוברול
+{
+  id: "red-overol",
+  name: "אוברול אדום כתף אחת",
+  quantity: 22,
+  ageRange: ["קטנטנות"],
+  categories: ["upper","overol"],
+  images: ["/costumes/overol/overol-1.JPG"],
+  colors: ["אדום"],
+  clothingTypes: ["אוברול"],
+  styles: ["ג׳אז"],
+  searchKeywords: ["אוברול", "אדום", "סטן"],
 },
 ];
