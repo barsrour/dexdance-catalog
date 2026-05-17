@@ -406,7 +406,7 @@ export const costumes: Costume[] = [
   searchKeywords: ["בגד גוף","חצאית","ירוק","עלים"],
 },
 {
-  id: "white-bodysuit",
+  id: "white-long-bodysuit",
   name: "בגד גוף לבן ארוך גב פתוח",
   quantity: 18,
   ageRange:"חטיבה-תיכון",
