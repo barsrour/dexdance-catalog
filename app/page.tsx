@@ -65,6 +65,14 @@ export default function Home() {
           חיפוש תלבושות לפי צבע, גיל, סוג וסגנון
         </p>
       </header>
+      <a
+  href="https://wa.me/972547276767?text=היי, אני רוצה לברר לגבי השכרת תלבושות"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="fixed bottom-5 right-5 z-50 rounded-full bg-green-500 px-5 py-3 text-sm font-bold text-white shadow-lg"
+>
+  WhatsApp
+</a>
       <section className="mb-5 overflow-x-auto">
   <div className="flex gap-2">
     <button
