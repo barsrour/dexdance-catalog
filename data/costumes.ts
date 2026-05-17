@@ -190,7 +190,7 @@ export const costumes: Costume[] = [
   colors: ["חום"],
   clothingTypes: ["חצאית"],
   styles: ["לירי","מודרני"],
-  searchKeywords: ["חצאית מנומרת", "שיפון", "מנומר", "חצאית"],
+  searchKeywords: ["מלך האריות", "שיפון", "מנומר", "חצאית"],
 },
 {
   id: "white-saten-skirt",
@@ -216,7 +216,7 @@ export const costumes: Costume[] = [
   colors: ["צבעוני"],
   clothingTypes: ["חצאית"],
   styles: ["לירי"],
-  searchKeywords: ["חצאית","צבעוני","אורגנזה"],
+  searchKeywords: ["חצאית","פרח","אורגנזה"],
 },
 {
   id: "black-shiffon-skirt",
@@ -307,7 +307,7 @@ export const costumes: Costume[] = [
   colors: ["שחור","אדום"],
   clothingTypes: ["חצאית"],
   styles: ["ג׳אז","היפ הופ"],
-  searchKeywords: ["חצאית","אדום","שחור"],
+  searchKeywords: ["חצאית","מלכת הלבבות","אליס בארץ הפלאות"],
 },
 //גופיות
 {
@@ -403,7 +403,7 @@ export const costumes: Costume[] = [
   colors: ["ירוק"],
   clothingTypes: ["בגד גוף", "חצאית"],
   styles: ["ג׳אז"],
-  searchKeywords: ["בגד גוף","חצאית","ירוק","עלים"],
+  searchKeywords: ["בגד גוף","חצאית","פרח","עלים"],
 },
 {
   id: "white-long-bodysuit",
@@ -442,7 +442,7 @@ export const costumes: Costume[] = [
   colors: ["ירוק"],
   clothingTypes: ["בגד גוף"],
   styles: ["לירי"],
-  searchKeywords: ["בגד גוף","ירוק","ארוך"],
+  searchKeywords: ["בגד גוף","עלים","פרח"],
 },
 
 //אוברול
@@ -470,7 +470,7 @@ export const costumes: Costume[] = [
   colors: ["ירוק","צבעוני"],
   clothingTypes: ["אוברול"],
   styles: ["היפ הופ"],
-  searchKeywords: ["אוברול","ירוק","עץ"],
+  searchKeywords: ["אוברול","מלך האריות","עץ"],
 },
 {
   id: "white-ktifa-overol",
@@ -509,7 +509,7 @@ export const costumes: Costume[] = [
   colors: ["ירוק"],
   clothingTypes: ["אוברול"],
   styles: ["ג׳אז"],
-  searchKeywords: ["אוברול","ירוק","תוכי"],
+  searchKeywords: ["אוברול","מלך האריות","תוכי"],
 },
 {
   id: "sarbal-blue-overol",
@@ -535,7 +535,7 @@ export const costumes: Costume[] = [
   colors: ["חום"],
   clothingTypes: ["אוברול"],
   styles: ["היפ הופ"],
-  searchKeywords: ["אוברול","חום","קוף"],
+  searchKeywords: ["אוברול","מלך האריות","קוף"],
 },
 {
   id: "chel-overol",
@@ -574,7 +574,7 @@ export const costumes: Costume[] = [
   colors: ["שחור","לבן"],
   clothingTypes: ["אוברול"],
   styles: ["היפ הופ"],
-  searchKeywords: ["אוברול","שחור","צבוע"],
+  searchKeywords: ["אוברול","מלך האריות","צבוע"],
 },
 {
   id: "chavoa-brown-overol",
@@ -587,7 +587,7 @@ export const costumes: Costume[] = [
   colors: ["שחור","חום"],
   clothingTypes: ["אוברול"],
   styles: ["היפ הופ"],
-  searchKeywords: ["אוברול","שחור","צבוע"],
+  searchKeywords: ["אוברול","מלך האריות","צבוע"],
 },
 {
   id: "trees-overol",
@@ -600,7 +600,7 @@ export const costumes: Costume[] = [
   colors: ["שחור","ירוק"],
   clothingTypes: ["אוברול"],
   styles: ["ג׳אז","מודרני"],
-  searchKeywords: ["אוברול","שחור","ערוק"],
+  searchKeywords: ["אוברול","שחור","עץ"],
 },
 {
   id: "jungle-overol",
@@ -613,7 +613,7 @@ export const costumes: Costume[] = [
   colors: ["ירוק","לבן","צבעוני"],
   clothingTypes: ["אוברול"],
   styles: ["ג׳אז","היפ הופ"],
-  searchKeywords: ["אוברול","ירוק","עלים"],
+  searchKeywords: ["אוברול","מלך האריות","עלים"],
 },
 {
   id: "paper-overol",
@@ -652,7 +652,7 @@ export const costumes: Costume[] = [
   colors: ["חום","כתום"],
   clothingTypes: ["אוברול"],
   styles: ["ג׳אז"],
-  searchKeywords: ["אוברול","כתום","סימבה"],
+  searchKeywords: ["אוברול","מלך האריות","סימבה"],
 },
 {
   id: "purple-overol",
@@ -665,7 +665,7 @@ export const costumes: Costume[] = [
   colors: ["סגול"],
   clothingTypes: ["אוברול"],
   styles: ["ג׳אז"],
-  searchKeywords: ["אוברול","ארוך","סגול"],
+  searchKeywords: ["אוברול","אליס בארץ הפלאות","סגול"],
 },
 {
   id: "snake-overol",
@@ -730,7 +730,7 @@ export const costumes: Costume[] = [
   colors: ["ורוד"],
   clothingTypes: ["אוברול"],
   styles: ["ג׳אז"],
-  searchKeywords: ["אוברול","ורוד","ארוך"],
+  searchKeywords: ["אוברול","ורוד","מלך האריות"],
 },
 {
   id: "pink-bodysuit",
@@ -769,7 +769,7 @@ export const costumes: Costume[] = [
   colors: ["חום"],
   clothingTypes: ["אוברול"],
   styles: ["ג׳אז"],
-  searchKeywords: ["אוברול","ג׳ירפה","ארוך"],
+  searchKeywords: ["אוברול","ג׳ירפה","מלך האריות"],
 },
 {
   id: "ayala-overol",
@@ -782,7 +782,7 @@ export const costumes: Costume[] = [
   colors: ["חום","כתום"],
   clothingTypes: ["אוברול"],
   styles: ["ג׳אז"],
-  searchKeywords: ["אוברול","כתום","חום"],
+  searchKeywords: ["אוברול","מלך האריות","חום"],
 },
 
 //ג׳קטים
@@ -797,7 +797,7 @@ export const costumes: Costume[] = [
   colors: ["צהוב"],
   clothingTypes: ["ג׳קט"],
   styles: ["ג׳אז","היפ הופ"],
-  searchKeywords: ["ג׳קט","צהוב","קטיפה"],
+  searchKeywords: ["ג׳קט","אליס בארץ הפלאות","קטיפה"],
 },
 {
   id: "black-white-jacket",
@@ -823,7 +823,7 @@ export const costumes: Costume[] = [
   colors: ["אדום","צבעוני"],
   clothingTypes: ["ג׳קט"],
   styles: ["ג׳אז","היפ הופ"],
-  searchKeywords: ["ג׳קט","אדום"],
+  searchKeywords: ["ג׳קט","אליס בארץ הפלאות"],
 },
 {
   id: "lev-jacket",
@@ -836,7 +836,7 @@ export const costumes: Costume[] = [
   colors: ["שחור","אדום"],
   clothingTypes: ["ג׳קט"],
   styles: ["ג׳אז","היפ הופ"],
-  searchKeywords: ["ג׳קט","אדום","שחור"],
+  searchKeywords: ["ג׳קט","אליס בארץ הפלאות","מלכת הלבבות"],
 },
 
 //טייצים
@@ -851,7 +851,7 @@ export const costumes: Costume[] = [
   colors: ["שחור","לבן"],
   clothingTypes: ["טייץ"],
   styles: ["ג׳אז","היפ הופ"],
-  searchKeywords: ["טייץ","לבן","שחור"],
+  searchKeywords: ["טייץ","מלכת הלבבות","אליס בארץ הפלאות"],
 },
 {
   id: "bordo-legging",
@@ -877,6 +877,6 @@ export const costumes: Costume[] = [
   colors: ["ירוק"],
   clothingTypes: ["טייץ"],
   styles: ["ג׳אז","היפ הופ"],
-  searchKeywords: ["טייץ","ירוק"],
+  searchKeywords: ["טייץ","צפרדע","הנסיכה והצפרדע"],
 },
 ];
