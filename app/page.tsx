@@ -25,7 +25,7 @@ export default function Home() {
       
       const text = [
         costume.name,
-        costume.ageRange.join(" "),
+        costume.ageGroup.join(" "),
         costume.colors.join(" "),
         costume.clothingTypes.join(" "),
         costume.styles.join(" "),
@@ -44,7 +44,7 @@ export default function Home() {
 
       const matchesAge =
         age === "" ||
-        costume.ageRange.includes(age);
+        costume.ageGroup.includes(age);
       return (
   matchesSearch &&
   matchesColor &&
