@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { costumes, filterOptions } from "@/data/costumes";
 import Link from "next/link";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -69,9 +70,9 @@ export default function Home() {
   href="https://wa.me/972547276767?text=היי, אני רוצה לברר לגבי השכרת תלבושות"
   target="_blank"
   rel="noopener noreferrer"
-  className="fixed bottom-5 right-5 z-50 rounded-full bg-green-500 px-5 py-3 text-sm font-bold text-white shadow-lg"
+  className="fixed bottom-24 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-white shadow-xl"
 >
-  WhatsApp
+  <FaWhatsapp size={30} />
 </a>
       <section className="mb-5 overflow-x-auto">
   <div className="flex gap-2">
