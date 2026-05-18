@@ -70,7 +70,7 @@ export default function Home() {
   href="https://wa.me/972547276767?text=היי, אני רוצה לברר לגבי השכרת תלבושות"
   target="_blank"
   rel="noopener noreferrer"
-  className="fixed bottom-24 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-white shadow-xl"
+  className="fixed bottom-4 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-white shadow-xl"
 >
   <FaWhatsapp size={30} />
 </a>
@@ -138,7 +138,7 @@ export default function Home() {
  <input
   value={search}
   onChange={(e) => setSearch(e.target.value)}
-  placeholder="חיפוש חופשי — למשל: אדום גיל 10 חצאית"
+  placeholder="חיפוש חופשי — למשל: חצאית קטנטנות"
   className="mb-3 w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none focus:border-red-600"
 />
 
