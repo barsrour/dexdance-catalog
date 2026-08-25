@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { getCostumeAvailability } from "./availability";
+import CostumeSearchSelect from "@/src/components/admin/CostumeSearchSelect";
 
 type Customer = {
   id: string;
@@ -246,39 +247,27 @@ const priceAfterVat = priceBeforeVat * 1.18;
       תלבושת
     </label>
 
-    <select
-      value={item.costumeId}
-      onChange={async (e) => {
-  const costumeId = e.target.value;
+   <CostumeSearchSelect
+  costumes={costumes}
+  value={item.costumeId}
+  onChange={async (costumeId) => {
+    setItems((current) =>
+  current.map((currentItem, itemIndex) =>
+    itemIndex === index
+      ? {
+          ...currentItem,
+          costumeId,
+          quantity: 1,
+        }
+      : currentItem
+  )
+);
 
-  setItems((current) =>
-    current.map((currentItem, itemIndex) =>
-      itemIndex === index
-        ? {
-            ...currentItem,
-            costumeId,
-            quantity: 1,
-          }
-        : currentItem
-    )
-  );
-
-  if (costumeId && startDate && endDate) {
-    await checkAvailability(costumeId);
-   
-  }
-}}
-      required
-      className="w-full rounded-xl border border-gray-300 bg-white px-3 py-3"
-    >
-      <option value="">בחרי תלבושת</option>
-
-      {costumes.map((costume) => (
-        <option key={costume.id} value={costume.id}>
-          {costume.name} — במלאי: {costume.total_quantity}
-        </option>
-      ))}
-    </select>
+    if (costumeId && startDate && endDate) {
+      await checkAvailability(costumeId);
+    }
+  }}
+/>
   </div>
 
   {/* כמות */}

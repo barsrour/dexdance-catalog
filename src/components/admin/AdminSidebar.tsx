@@ -53,18 +53,20 @@ export default function AdminSidebar() {
   return (
     <>
       {/* פס עליון במובייל */}
-      <div className="sticky top-0 z-40 flex items-center justify-between bg-zinc-900 px-4 py-3 text-white md:hidden">
-        <span className="font-bold">dex.dance Admin</span>
+     <div className="sticky top-0 z-40 flex items-center justify-between bg-zinc-900 px-4 py-3 text-white md:hidden">
+  <button
+    type="button"
+    onClick={() => setIsOpen(true)}
+    aria-label="פתיחת תפריט ניהול"
+    className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-2xl"
+  >
+    ☰
+  </button>
 
-        <button
-          type="button"
-          onClick={() => setIsOpen(true)}
-          aria-label="פתיחת תפריט ניהול"
-          className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-2xl"
-        >
-          ☰
-        </button>
-      </div>
+  <span className="font-bold">
+    dex.dance Admin
+  </span>
+</div>
 
       {/* Sidebar בדסקטופ */}
       <aside className="hidden min-h-screen w-64 flex-shrink-0 bg-zinc-900 p-6 text-white md:block">

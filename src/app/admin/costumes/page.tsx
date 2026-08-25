@@ -2,6 +2,8 @@ import { createClient } from "@/src/utils/supabase/server";
 import Link from "next/link";
 import DeleteCostumeButton from "./[slug]/DeleteCostumeButton";
 import { deleteCostume } from "./[slug]/actions";
+import AdminCostumesList from "@/src/components/admin/AdminCostumesList";
+
 
 export default async function CostumesPage() {
   const supabase = await createClient();
@@ -41,53 +43,10 @@ export default async function CostumesPage() {
       </div>
 
       <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
-        {costumes?.map((costume) => (
-          <div
-            key={costume.id}
-            className="flex items-center gap-4 border-b border-gray-100 p-4 last:border-b-0"
-          >
-            <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-gray-100">
-              {costume.cover_image && (
-                <img
-                  src={costume.cover_image}
-                  alt={costume.name}
-                  className="h-full w-full object-cover"
-                />
-              )}
-            </div>
-
-            <div className="min-w-0 flex-1">
-              <h2 className="font-bold text-black">
-                {costume.name}
-              </h2>
-
-              <p className="mt-1 text-sm text-gray-500">
-                כמות: {costume.total_quantity}
-              </p>
-
-              {costume.age_range && (
-                <p className="text-sm text-gray-500">
-                  גיל: {costume.age_range}
-                </p>
-              )}
-            </div>
-
-            <div className="flex gap-2">
-             <Link
-  href={`/admin/costumes/${costume.slug}`}
-  className="rounded-lg border border-gray-300 px-3 py-2 text-sm"
->
-  פתיחה
-</Link>
-
-              <DeleteCostumeButton
-  costumeName={costume.name}
-  deleteAction={deleteCostume.bind(null, costume.slug)}
-  size="small"
+        <AdminCostumesList
+  costumes={costumes ?? []}
+  deleteCostume={deleteCostume}
 />
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );

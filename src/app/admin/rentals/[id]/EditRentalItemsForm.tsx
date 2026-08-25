@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { getEditAvailability } from "@/src/app/admin/rentals/actions";
+import CostumeSearchSelect from "@/src/components/admin/CostumeSearchSelect";
 
 type Costume = {
   id: string;
@@ -145,35 +146,20 @@ export default function EditRentalItemsForm({
                     תלבושת
                   </label>
 
-                  <select
-                    value={item.costumeId}
-                    onChange={async (e) => {
-                      const costumeId = e.target.value;
+                 <CostumeSearchSelect
+  costumes={costumes}
+  value={item.costumeId}
+  onChange={async (costumeId) => {
+    updateItem(index, {
+      costumeId,
+      quantity: 1,
+    });
 
-                      updateItem(index, {
-                        costumeId,
-                        quantity: 1,
-                      });
-
-                      if (costumeId) {
-                        await loadAvailability(costumeId);
-                      }
-                    }}
-                    className="w-full rounded-xl border border-gray-300 bg-white px-3 py-3"
-                  >
-                    <option value="">
-                      בחרי תלבושת
-                    </option>
-
-                    {costumes.map((costume) => (
-                      <option
-                        key={costume.id}
-                        value={costume.id}
-                      >
-                        {costume.name}
-                      </option>
-                    ))}
-                  </select>
+    if (costumeId) {
+      await loadAvailability(costumeId);
+    }
+  }}
+/>
                 </div>
 
                 {/* כמות */}
@@ -267,6 +253,29 @@ export default function EditRentalItemsForm({
       >
         + הוספת תלבושת להשכרה
       </button>
+
+      {/* סיכום מחיר */}
+      <div className="grid gap-4 rounded-xl bg-gray-50 p-4 md:grid-cols-2">
+        <div>
+          <p className="text-sm text-gray-500">
+            מחיר לפני מע״מ
+          </p>
+
+          <p className="text-xl font-bold">
+            ₪{priceBeforeVat.toFixed(2)}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-sm text-gray-500">
+            מחיר אחרי מע״מ
+          </p>
+
+          <p className="text-xl font-bold">
+            ₪{priceAfterVat.toFixed(2)}
+          </p>
+        </div>
+      </div>
 
       <button
         type="submit"

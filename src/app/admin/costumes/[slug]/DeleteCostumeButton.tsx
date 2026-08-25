@@ -50,7 +50,11 @@ export default function DeleteCostumeButton({
     : "rounded-xl border border-red-300 px-46 py-5 font-bold text-red-600 disabled:opacity-50"
 }
     >
-      {isDeleting ? "מוחקת..." : "מחיקת תלבושת"}
+     {isDeleting
+  ? "מוחקת..."
+  : size === "small"
+  ? "מחק"
+  : "מחיקת תלבושת"}
     </button>
   );
 }
