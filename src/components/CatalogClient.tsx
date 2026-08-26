@@ -339,12 +339,11 @@ export default function CatalogClient({
                     {costume.name}
                   </h2>
 
-                  {costume.age_range && (
-                    <p className="text-[11px] text-gray-500 md:text-base">
-                      {costume.age_range}
-                    </p>
-                  )}
-
+                 {(costume.age_groups?.length ?? 0) > 0 && (
+  <p className="mt-1 text-[11px] text-gray-500 md:text-base">
+    {costume.age_groups?.join(", ")}
+  </p>
+)}
                   <p className="text-[11px] text-gray-500 md:text-base">
                     כמות: {costume.total_quantity}
                   </p>

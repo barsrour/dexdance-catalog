@@ -11,6 +11,7 @@ type Costume = {
   total_quantity: number;
   age_range: string | null;
   cover_image: string | null;
+  age_groups: string[] | null;
 };
 
 type Props = {
@@ -93,11 +94,9 @@ export default function AdminCostumesList({
                     כמות: {costume.total_quantity}
                   </p>
 
-                  {costume.age_range && (
-                    <p className="text-sm text-gray-500">
-                      גיל: {costume.age_range}
-                    </p>
-                  )}
+                              <p className="mt-1 text-sm text-gray-500">
+ גיל: {costume.age_groups?.join(", ")}
+</p>
                 </div>
               </div>
 
@@ -144,11 +143,9 @@ export default function AdminCostumesList({
                   כמות: {costume.total_quantity}
                 </p>
 
-                {costume.age_range && (
-                  <p className="text-sm text-gray-500">
-                    גיל: {costume.age_range}
-                  </p>
-                )}
+                <p className="mt-1 text-sm text-gray-500">
+ גיל: {costume.age_groups?.join(", ")}
+</p>
               </div>
 
               <div className="flex gap-2">
