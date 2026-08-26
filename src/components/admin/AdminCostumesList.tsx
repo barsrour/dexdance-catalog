@@ -12,6 +12,8 @@ type Costume = {
   age_range: string | null;
   cover_image: string | null;
   age_groups: string[] | null;
+  search_keywords: string[] | null;
+extra_search_keywords: string[] | null;
 };
 
 type Props = {
@@ -28,21 +30,25 @@ export default function AdminCostumesList({
   const [search, setSearch] = useState("");
 
   const filteredCostumes = useMemo(() => {
-    const value = search.trim().toLowerCase();
+  const value = search.trim().toLowerCase();
 
-    if (!value) return costumes;
+  if (!value) return costumes;
 
-    return costumes.filter((costume) =>
-      [
-        costume.name,
-        costume.age_range ?? "",
-        costume.slug,
-      ]
-        .join(" ")
-        .toLowerCase()
-        .includes(value)
-    );
-  }, [costumes, search]);
+  return costumes.filter((costume) => {
+    const searchableText = [
+      costume.name,
+      costume.slug,
+      costume.age_range ?? "",
+      ...(costume.age_groups ?? []),
+      ...(costume.search_keywords ?? []),
+      ...(costume.extra_search_keywords ?? []),
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return searchableText.includes(value);
+  });
+}, [costumes, search]);
 
   return (
     <div>
