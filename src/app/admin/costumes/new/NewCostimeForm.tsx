@@ -196,7 +196,22 @@ export default function NewCostumeForm({
           className="w-full rounded-xl border border-gray-300 px-4 py-3"
         />
       </div>
+<div>
+  <label className="mb-2 block text-sm font-bold">
+    מילות חיפוש נוספות
+  </label>
 
+  <input
+    type="text"
+    name="extra_search_keywords"
+    placeholder="לדוגמה: נצנצים, כתף אחת, מבריק"
+    className="w-full rounded-xl border border-gray-300 px-4 py-3"
+  />
+
+  <p className="mt-1 text-xs text-gray-500">
+    הפרידי בין מילות החיפוש באמצעות פסיק
+  </p>
+</div>
       <CostumeImageUploader
         currentImages={images}
         onImagesChange={setImages}

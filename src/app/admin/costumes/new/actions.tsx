@@ -40,7 +40,12 @@ export async function createCostume(formData: FormData) {
   }
 
   const slug = createSlug(name);
-
+const extraSearchKeywords = String(
+  formData.get("extra_search_keywords") ?? ""
+)
+  .split(",")
+  .map((keyword) => keyword.trim())
+  .filter(Boolean);
   const { error } = await supabase
     .from("costumes")
     .insert({
@@ -49,6 +54,15 @@ export async function createCostume(formData: FormData) {
       total_quantity: Number(
         formData.get("total_quantity") ?? 0
       ),
+     search_keywords: [
+  name,
+  ...formData.getAll("age_groups").map(String),
+  ...formData.getAll("colors").map(String),
+  ...formData.getAll("clothing_types").map(String),
+  ...formData.getAll("styles").map(String),
+  ...formData.getAll("categories").map(String),
+  ...extraSearchKeywords,
+],
       age_groups: formData
         .getAll("age_groups")
         .map(String),

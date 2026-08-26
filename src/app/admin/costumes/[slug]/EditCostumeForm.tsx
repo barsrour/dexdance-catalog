@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CostumeImageUploader from "@/src/components/admin/CostumeImageUploader";
 import { updateCostume, deleteCostume } from "./actions";
 import DeleteCostumeButton from "./DeleteCostumeButton";
@@ -20,6 +20,8 @@ type Costume = {
   description: string | null;
   location: string | null;
   categories: string[] | null;
+  search_keywords: string[] | null;
+  extra_search_keywords: string[] | null;
 };
 
 type Props = {
@@ -34,7 +36,50 @@ export default function EditCostumeForm({
   const [images, setImages] = useState<string[]>(
     costume.images ?? []
   );
+const [ageGroups, setAgeGroups] = useState<string[]>(
+  costume.age_groups ?? []
+);
 
+const [categories, setCategories] = useState<string[]>(
+  costume.categories ?? []
+);
+
+const [colors, setColors] = useState<string[]>(
+  costume.colors ?? []
+);
+
+const [clothingTypes, setClothingTypes] = useState<string[]>(
+  costume.clothing_types ?? []
+);
+
+const [styles, setStyles] = useState<string[]>(
+  costume.styles ?? []
+);
+const [extraSearchKeywords, setExtraSearchKeywords] = useState(
+  costume.extra_search_keywords?.join(", ") ?? ""
+);
+useEffect(() => {
+  setImages(costume.images ?? []);
+  setAgeGroups(costume.age_groups ?? []);
+  setCategories(costume.categories ?? []);
+  setColors(costume.colors ?? []);
+  setClothingTypes(costume.clothing_types ?? []);
+  setStyles(costume.styles ?? []);
+  setExtraSearchKeywords(
+    costume.extra_search_keywords?.join(", ") ?? ""
+  );
+}, [costume]);
+function toggleValue(
+  value: string,
+  values: string[],
+  setValues: React.Dispatch<React.SetStateAction<string[]>>
+) {
+  setValues(
+    values.includes(value)
+      ? values.filter((item) => item !== value)
+      : [...values, value]
+  );
+}
   return (
     <form
       action={saveCostume}
@@ -89,9 +134,10 @@ export default function EditCostumeForm({
           type="checkbox"
           name="age_groups"
           value={age}
-          defaultChecked={
-            costume.age_groups?.includes(age) ?? false
-          }
+          checked={ageGroups.includes(age)}
+onChange={() =>
+  toggleValue(age, ageGroups, setAgeGroups)
+}
         />
 
         {age}
@@ -111,14 +157,15 @@ export default function EditCostumeForm({
         key={color}
         className="flex items-center gap-2 rounded-lg border p-3"
       >
-        <input
-          type="checkbox"
-          name="colors"
-          value={color}
-          defaultChecked={
-            costume.colors?.includes(color) ?? false
-          }
-        />
+     <input
+  type="checkbox"
+  name="colors"
+  value={color}
+  checked={colors.includes(color)}
+  onChange={() =>
+    toggleValue(color, colors, setColors)
+  }
+/>
 
         {color}
       </label>
@@ -137,13 +184,14 @@ export default function EditCostumeForm({
         className="flex items-center gap-2 rounded-lg border p-3"
       >
         <input
-          type="checkbox"
-          name="clothing_types"
-          value={type}
-          defaultChecked={
-            costume.clothing_types?.includes(type) ?? false
-          }
-        />
+  type="checkbox"
+  name="clothing_types"
+  value={type}
+  checked={clothingTypes.includes(type)}
+  onChange={() =>
+    toggleValue(type, clothingTypes, setClothingTypes)
+  }
+/>
 
         {type}
       </label>
@@ -161,14 +209,15 @@ export default function EditCostumeForm({
         key={style}
         className="flex items-center gap-2 rounded-lg border p-3"
       >
-        <input
-          type="checkbox"
-          name="styles"
-          value={style}
-          defaultChecked={
-            costume.styles?.includes(style) ?? false
-          }
-        />
+      <input
+  type="checkbox"
+  name="styles"
+  value={style}
+  checked={styles.includes(style)}
+  onChange={() =>
+    toggleValue(style, styles, setStyles)
+  }
+/>
 
         {style}
       </label>
@@ -200,14 +249,15 @@ export default function EditCostumeForm({
         key={value}
         className="flex items-center gap-2 rounded-lg border p-3"
       >
-        <input
-          type="checkbox"
-          name="categories"
-          value={value}
-          defaultChecked={
-            costume.categories?.includes(value) ?? false
-          }
-        />
+       <input
+  type="checkbox"
+  name="categories"
+  value={value}
+  checked={categories.includes(value)}
+  onChange={() =>
+    toggleValue(value, categories, setCategories)
+  }
+/>
 
         {label}
       </label>
@@ -225,7 +275,20 @@ export default function EditCostumeForm({
           className="w-full rounded-xl border border-gray-300 px-4 py-3"
         />
       </div>
+<div>
+  <label className="mb-2 block text-sm font-bold">
+    מילות חיפוש נוספות
+  </label>
 
+  <input
+  type="text"
+  name="extra_search_keywords"
+  value={extraSearchKeywords}
+  onChange={(e) => setExtraSearchKeywords(e.target.value)}
+  placeholder="לדוגמה: נצנצים, כתף אחת, מבריק"
+  className="w-full rounded-xl border border-gray-300 px-4 py-3"
+/>
+</div>
       <div>
         <label className="mb-2 block text-sm font-bold">
           תיאור
