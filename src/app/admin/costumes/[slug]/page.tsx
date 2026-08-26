@@ -24,7 +24,28 @@ export default async function CostumeAdminPage({
   if (error || !costume) {
     notFound();
   }
+const { data: availabilityData, error: availabilityError } =
+  await supabase.rpc("get_current_costume_availability", {
+    p_costume_id: costume.id,
+  });
 
+if (availabilityError) {
+  console.error("Availability error:", availabilityError);
+}
+
+const availability = availabilityData?.[0];
+
+const rentedQuantity = Number(
+  availability?.rented_quantity ?? 0
+);
+
+const availableQuantity = Number(
+  availability?.available_quantity ??
+    costume.total_quantity
+);
+
+const rentedUntil =
+  availability?.rented_until ?? null;
   return (
      <div dir="rtl">
      <Link
@@ -90,14 +111,61 @@ export default async function CostumeAdminPage({
 
             <div className="mt-4">
               <p className="text-sm text-gray-500">כמות כוללת</p>
-              <p className="text-3xl font-bold">
-                {costume.total_quantity}
-              </p>
+              <div className="mt-4 grid grid-cols-3 gap-3 text-center">
+  <div className="rounded-xl bg-gray-50 p-3">
+    <p className="text-xs text-gray-500">סה״כ</p>
+    <p className="mt-1 text-xl font-bold">
+      {costume.total_quantity}
+    </p>
+  </div>
+
+  <div className="rounded-xl bg-orange-50 p-3">
+    <p className="text-xs text-orange-600">בהשכרה</p>
+    <p className="mt-1 text-xl font-bold text-orange-700">
+      {rentedQuantity}
+    </p>
+  </div>
+
+  <div className="rounded-xl bg-green-50 p-3">
+    <p className="text-xs text-green-600">זמינות</p>
+    <p className="mt-1 text-xl font-bold text-green-700">
+      {availableQuantity}
+    </p>
+  </div>
+</div>
             </div>
 
-            <div className="mt-4 rounded-xl bg-green-50 p-3 text-green-700">
-              כרגע אין השכרות פעילות
-            </div>
+         {rentedQuantity > 0 ? (
+  <div className="mt-4 rounded-xl bg-orange-50 p-4">
+    <p className="font-bold text-orange-700">
+      {rentedQuantity} יחידות נמצאות כרגע בהשכרה
+    </p>
+
+    <p className="mt-1 text-sm text-orange-600">
+      זמינות כרגע: {availableQuantity} מתוך{" "}
+      {costume.total_quantity}
+    </p>
+
+    {rentedUntil && (
+      <p className="mt-1 text-sm text-orange-600">
+        עד{" "}
+        {(() => {
+          const [year, month, day] = rentedUntil.split("-");
+
+          return (
+            <span dir="ltr">
+              {day}/{month}/{year}
+            </span>
+          );
+        })()}
+      </p>
+    )}
+  </div>
+) : (
+  <div className="mt-4 rounded-xl bg-green-50 p-3 font-semibold text-green-700">
+    ✓ אין כרגע השכרות פעילות
+  </div>
+)}
           </div>
 
           <div className="rounded-2xl bg-white p-5 shadow-sm">
