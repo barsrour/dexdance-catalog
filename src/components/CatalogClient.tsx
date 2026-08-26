@@ -18,6 +18,7 @@ type Costume = {
   clothing_types: string[] | null;
   styles: string[] | null;
   search_keywords: string[] | null;
+  extra_search_keywords: string[] | null;
   rented_quantity: number;
 available_quantity: number;
 rented_until: string | null;
@@ -50,6 +51,8 @@ export default function CatalogClient({
       const clothingTypes = costume.clothing_types ?? [];
       const styles = costume.styles ?? [];
       const searchKeywords = costume.search_keywords ?? [];
+      const extraSearchKeywords =
+  costume.extra_search_keywords ?? [];
       const ageGroups = costume.age_groups ?? [];
       const categories = costume.categories ?? [];
 
@@ -61,6 +64,7 @@ export default function CatalogClient({
         ...clothingTypes,
         ...styles,
         ...searchKeywords,
+        ...extraSearchKeywords,
       ]
         .join(" ")
         .toLowerCase();

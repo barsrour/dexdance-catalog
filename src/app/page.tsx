@@ -19,7 +19,8 @@ export default async function HomePage() {
       colors,
       clothing_types,
       styles,
-      search_keywords
+      search_keywords,
+      extra_search_keywords
       `
     )
     .eq("is_active", true)
