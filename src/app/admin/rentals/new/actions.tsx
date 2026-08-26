@@ -1,5 +1,5 @@
 "use server";
-
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/src/utils/supabase/server";
 
@@ -176,10 +176,21 @@ for (const item of items) {
       "יש לבחור לפחות תלבושת אחת"
     );
   }
+const priceBeforeVat = Number(
+  formData.get("price_before_vat") ?? 0
+);
 
+const addVat =
+  formData.get("add_vat") === "true";
+
+const priceAfterVat = addVat
+  ? priceBeforeVat * 1.18
+  : priceBeforeVat;
   const {
+    
     data: rental,
     error: rentalError,
+    
   } = await supabase
     .from("rentals")
     .insert({
@@ -187,13 +198,9 @@ for (const item of items) {
       start_date: startDate,
       end_date: endDate,
       status,
-      price_before_vat: Number(
-  formData.get("price_before_vat") ?? 0
-),
-
-price_after_vat: Number(
-  formData.get("price_after_vat") ?? 0
-),
+      price_before_vat: priceBeforeVat,
+price_after_vat: priceAfterVat,
+add_vat: addVat,
 is_paid: formData.get("is_paid") === "true",
       notes: String(
         formData.get(

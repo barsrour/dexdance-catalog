@@ -1,6 +1,25 @@
 import Link from "next/link";
 import { createClient } from "@/src/utils/supabase/server";
+import DeleteRentalButton from "@/src/components/admin/DeleteRentalButton";
+import { deleteRental } from "./actions";
 
+function formatDateParts(dateString: string | null) {
+  if (!dateString) {
+    return {
+      day: "--",
+      month: "--",
+      year: "----",
+    };
+  }
+
+  const [year, month, day] = dateString.split("-");
+
+  return {
+    day,
+    month,
+    year,
+  };
+}
 export default async function RentalsPage() {
   const supabase = await createClient();
 
@@ -134,7 +153,37 @@ export default async function RentalsPage() {
                   </p>
 
                   <p className="font-semibold">
-                    {rental.start_date} — {rental.end_date}
+                    {(() => {
+  const date = formatDateParts(rental.start_date);
+
+  return (
+    <span
+      dir="ltr"
+      className="inline-flex items-center gap-1"
+    >
+      <span>{date.day}</span>
+      <span>/</span>
+      <span>{date.month}</span>
+      <span>/</span>
+      <span>{date.year}</span>
+    </span>
+  );
+})()} — {(() => {
+  const date = formatDateParts(rental.end_date);
+
+  return (
+    <span
+      dir="ltr"
+      className="inline-flex items-center gap-1"
+    >
+      <span>{date.day}</span>
+      <span>/</span>
+      <span>{date.month}</span>
+      <span>/</span>
+      <span>{date.year}</span>
+    </span>
+  );
+})()}
                   </p>
                 </div>
 
@@ -148,10 +197,12 @@ export default async function RentalsPage() {
                     {" "}לפני מע״מ
                   </p>
 
-                  <p className="text-sm text-gray-500">
-                    ₪{Number(rental.price_after_vat ?? 0).toFixed(2)}
-                    {" "}אחרי מע״מ
-                  </p>
+                  {rental.add_vat && (
+  <p className="text-sm text-gray-500">
+    ₪{Number(rental.price_after_vat ?? 0).toFixed(2)}
+    {" "}אחרי מע״מ
+  </p>
+)}
                 </div>
               </div>
 
@@ -183,13 +234,29 @@ export default async function RentalsPage() {
                   {rental.notes}
                 </div>
               )}
-              <div className="mt-5 border-t border-gray-100 pt-4">
+<div className="flex flex-wrap gap-4 mt-5">
+  
+  <div className="flex flex-wrap gap-4">
   <Link
     href={`/admin/rentals/${rental.id}`}
-    className="inline-block rounded-xl bg-red-600 px-4 py-2 font-semibold text-white"
+    className="rounded-xl bg-red-600 px-4 py-2 font-semibold text-white"
   >
     פתיחת השכרה
   </Link>
+
+  <Link
+    href={`/admin/rentals/${rental.id}/document`}
+    className="rounded-xl border border-red-600 px-4 py-2 font-semibold text-red-600"
+  >
+    פירוט השכרה / PDF
+  </Link>
+
+  <DeleteRentalButton
+    rentalId={rental.id}
+    customerName={rental.customers?.full_name}
+    deleteAction={deleteRental}
+  />
+</div>
 </div>
             </div>
             

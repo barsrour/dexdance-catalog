@@ -155,6 +155,9 @@ export async function updateRentalItems(
 ) {
   const supabase = await createClient();
 
+  const addVat =
+    formData.get("add_vat") === "true";
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -242,13 +245,16 @@ export async function updateRentalItems(
     0
   );
 
-  const priceAfterVat = priceBeforeVat * 1.18;
+  const priceAfterVat = addVat
+  ? priceBeforeVat * 1.18
+  : priceBeforeVat;
 
   const { error: rentalError } = await supabase
     .from("rentals")
     .update({
       price_before_vat: priceBeforeVat,
       price_after_vat: priceAfterVat,
+      add_vat: addVat,
     })
     .eq("id", rentalId);
 
@@ -259,4 +265,40 @@ export async function updateRentalItems(
   revalidatePath(`/admin/rentals/${rentalId}`);
   revalidatePath("/admin/rentals");
   revalidatePath("/");
+}
+export async function deleteRental(rentalId: string) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("אין הרשאה");
+  }
+
+  // קודם מוחקים את התלבושות המקושרות להשכרה
+  const { error: itemsError } = await supabase
+    .from("rental_items")
+    .delete()
+    .eq("rental_id", rentalId);
+
+  if (itemsError) {
+    throw new Error(itemsError.message);
+  }
+
+  // ואז את ההשכרה עצמה
+  const { error: rentalError } = await supabase
+    .from("rentals")
+    .delete()
+    .eq("id", rentalId);
+
+  if (rentalError) {
+    throw new Error(rentalError.message);
+  }
+
+  revalidatePath("/admin/rentals");
+  revalidatePath("/admin/calendar");
+
+  return { success: true };
 }

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/src/utils/supabase/server";
+import DeleteCustomerButton from "@/src/components/admin/DeleteCustomerButton";
+import { deleteCustomer } from "./actions";
 
 export default async function CustomersPage() {
   const supabase = await createClient();
@@ -30,26 +32,45 @@ export default async function CustomersPage() {
       <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
         {customers?.length ? (
           customers.map((customer) => (
-            <div
-              key={customer.id}
-              className="border-b border-gray-100 p-4 last:border-b-0"
-            >
-              <h2 className="font-bold">
-                {customer.full_name}
-              </h2>
+           <div
+  key={customer.id}
+  className="flex flex-col gap-4 border-b border-gray-100 p-4 last:border-b-0 sm:flex-row sm:items-center sm:justify-between"
+>
+  <div>
+    <h2 className="font-bold">
+      {customer.full_name}
+    </h2>
 
-              {customer.phone && (
-                <p className="mt-1 text-sm text-gray-500">
-                  {customer.phone}
-                </p>
-              )}
+    {customer.phone && (
+      <p className="mt-1 text-sm text-gray-500">
+        {customer.phone}
+      </p>
+    )}
 
-              {customer.email && (
-                <p className="text-sm text-gray-500">
-                  {customer.email}
-                </p>
-              )}
-            </div>
+    {customer.email && (
+      <p className="text-sm text-gray-500">
+        {customer.email}
+      </p>
+    )}
+  </div>
+
+  <div className="flex gap-2">
+    <Link
+      href={`/admin/customers/${customer.id}`}
+      className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold"
+    >
+      עריכה
+    </Link>
+
+    <DeleteCustomerButton
+      customerName={customer.full_name}
+      deleteAction={deleteCustomer.bind(
+        null,
+        customer.id
+      )}
+    />
+  </div>
+</div>
           ))
         ) : (
           <p className="p-6 text-gray-500">

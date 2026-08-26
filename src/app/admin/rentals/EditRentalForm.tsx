@@ -9,10 +9,17 @@ type Props = {
     price_after_vat: number | null;
     is_paid: boolean | null;
     notes: string | null;
+    add_vat: boolean | null;
   };
   saveRental: (formData: FormData) => Promise<void>;
 };
+function formatDate(dateString: string | null) {
+  if (!dateString) return "—";
 
+  const [year, month, day] = dateString.split("-");
+
+  return `${day}/${month}/${year}`;
+}
 export default function EditRentalForm({
   rental,
   saveRental,
@@ -30,13 +37,13 @@ export default function EditRentalForm({
             תאריך יציאה
           </label>
 
-          <input
-            name="start_date"
-            type="date"
-            defaultValue={rental.start_date}
-            required
-            className="w-full rounded-xl border border-gray-300 px-4 py-3"
-          />
+         <input
+  name="start_date"
+  type="date"
+  defaultValue={rental.start_date?.slice(0, 10) ?? ""}
+  required
+  className="w-full rounded-xl border border-gray-300 px-4 py-3"
+/>
         </div>
 
         <div>
@@ -45,12 +52,12 @@ export default function EditRentalForm({
           </label>
 
           <input
-            name="end_date"
-            type="date"
-            defaultValue={rental.end_date}
-            required
-            className="w-full rounded-xl border border-gray-300 px-4 py-3"
-          />
+  name="end_date"
+  type="date"
+  defaultValue={rental.end_date?.slice(0, 10) ?? ""}
+  required
+  className="w-full rounded-xl border border-gray-300 px-4 py-3"
+/>
         </div>
       </div>
 

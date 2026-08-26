@@ -43,7 +43,7 @@ export default function NewRentalForm({
   ]);
 const [startDate, setStartDate] = useState("");
 const [endDate, setEndDate] = useState("");
-
+const [addVat, setAddVat] = useState(true);
 const [availability, setAvailability] = useState<
   Record<
     string,
@@ -133,7 +133,9 @@ const priceBeforeVat = items.reduce(
   0
 );
 
-const priceAfterVat = priceBeforeVat * 1.18;
+const priceAfterVat = addVat
+  ? priceBeforeVat * 1.18
+  : priceBeforeVat;
   return (
     <form
       action={saveRental}
@@ -417,6 +419,23 @@ const priceAfterVat = priceBeforeVat * 1.18;
       value={priceAfterVat.toFixed(2)}
     />
   </div>
+  <div>
+  <label className="flex items-center gap-3 rounded-xl border border-gray-300 p-4">
+    <input
+  type="checkbox"
+  name="add_vat"
+  value="true"
+  checked={addVat}
+  onChange={(e) => setAddVat(e.target.checked)}
+  className="h-4 w-4"
+/>
+
+    <span className="font-semibold">
+      הוסף מע״מ
+    </span>
+  </label>
+ 
+</div>
 </div>
   <div>
   <label className="flex items-center gap-3 rounded-xl border border-gray-300 p-4">

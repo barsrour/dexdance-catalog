@@ -8,6 +8,32 @@ import {
   updateRentalItems,
 } from "@/src/app/admin/rentals/actions";
 
+function formatDate(dateString: string | null) {
+  if (!dateString) return "—";
+
+  const [year, month, day] = dateString.split("-");
+
+  return `${day}/${month}/${year}`;
+}
+
+function formatDateParts(dateString: string | null) {
+  if (!dateString) {
+    return {
+      day: "--",
+      month: "--",
+      year: "----",
+    };
+  }
+
+  const [year, month, day] = dateString.split("-");
+
+  return {
+    day,
+    month,
+    year,
+  };
+}
+
 export default async function RentalPage({
   params,
 }: {
@@ -26,6 +52,7 @@ export default async function RentalPage({
       status,
       price_before_vat,
       price_after_vat,
+      add_vat,
       is_paid,
       notes,
       created_at,
@@ -105,7 +132,37 @@ const { data: costumes } = await supabase
           </h1>
 
           <p className="mt-1 text-gray-500">
-            {rental.start_date} — {rental.end_date}
+             {(() => {
+  const date = formatDateParts(rental.start_date);
+
+  return (
+    <span
+      dir="ltr"
+      className="inline-flex items-center gap-1"
+    >
+      <span>{date.day}</span>
+      <span>/</span>
+      <span>{date.month}</span>
+      <span>/</span>
+      <span>{date.year}</span>
+    </span>
+  );
+})()} —   {(() => {
+  const date = formatDateParts(rental.end_date);
+
+  return (
+    <span
+      dir="ltr"
+      className="inline-flex items-center gap-1"
+    >
+      <span>{date.day}</span>
+      <span>/</span>
+      <span>{date.month}</span>
+      <span>/</span>
+      <span>{date.year}</span>
+    </span>
+  );
+})()}
           </p>
         </div>
 
@@ -168,7 +225,24 @@ const { data: costumes } = await supabase
               תאריך יציאה
             </p>
             <p className="text-lg font-semibold">
-              {rental.start_date}
+             <span dir="ltr">
+  {(() => {
+  const date = formatDateParts(rental.start_date);
+
+  return (
+    <span
+      dir="ltr"
+      className="inline-flex items-center gap-1"
+    >
+      <span>{date.day}</span>
+      <span>/</span>
+      <span>{date.month}</span>
+      <span>/</span>
+      <span>{date.year}</span>
+    </span>
+  );
+})()}
+</span>
             </p>
           </div>
 
@@ -177,7 +251,24 @@ const { data: costumes } = await supabase
               תאריך החזרה
             </p>
             <p className="text-lg font-semibold">
-              {rental.end_date}
+             <span dir="ltr">
+ {(() => {
+  const date = formatDateParts(rental.end_date);
+
+  return (
+    <span
+      dir="ltr"
+      className="inline-flex items-center gap-1"
+    >
+      <span>{date.day}</span>
+      <span>/</span>
+      <span>{date.month}</span>
+      <span>/</span>
+      <span>{date.year}</span>
+    </span>
+  );
+})()}
+</span>
             </p>
           </div>
         </div>
@@ -237,13 +328,12 @@ const { data: costumes } = await supabase
           </div>
 
           <div>
-            <p className="text-sm text-gray-500">
-              מחיר אחרי מע״מ
-            </p>
-
-            <p className="text-2xl font-bold">
-              ₪{Number(rental.price_after_vat ?? 0).toFixed(2)}
-            </p>
+           {rental.add_vat && (
+  <p className="text-sm text-gray-500">
+    ₪{Number(rental.price_after_vat ?? 0).toFixed(2)}
+    {" "}אחרי מע״מ
+  </p>
+)}
           </div>
         </div>
       </section>
@@ -266,8 +356,9 @@ const { data: costumes } = await supabase
 />
 <EditRentalItemsForm
   rentalId={rental.id}
-  startDate={rental.start_date}
-  endDate={rental.end_date}
+  startDate={formatDate(rental.start_date)}
+  endDate=  {formatDate(rental.end_date)}
+  addVatInitial={Boolean(rental.add_vat)}
   costumes={costumes ?? []}
   initialItems={initialItems}
   saveItems={updateRentalItems.bind(

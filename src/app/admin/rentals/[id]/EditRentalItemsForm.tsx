@@ -29,6 +29,7 @@ type Props = {
   costumes: Costume[];
   initialItems: Item[];
   saveItems: (formData: FormData) => Promise<void>;
+  addVatInitial: boolean;
 };
 
 export default function EditRentalItemsForm({
@@ -37,20 +38,21 @@ export default function EditRentalItemsForm({
   endDate,
   costumes,
   initialItems,
+  addVatInitial,
   saveItems,
 }: Props) {
   const [items, setItems] = useState<Item[]>(initialItems);
-
+const [showVat, setShowVat] = useState(addVatInitial);
   const [availability, setAvailability] = useState<
     Record<string, AvailabilityInfo>
   >({});
 
-  const priceBeforeVat = items.reduce(
-    (sum, item) => sum + item.quantity * item.unitPrice,
-    0
-  );
+const priceBeforeVat = items.reduce(
+  (sum, item) => sum + item.quantity * item.unitPrice,
+  0
+);
 
-  const priceAfterVat = priceBeforeVat * 1.18;
+const priceAfterVat = priceBeforeVat * 1.18;
 
   async function loadAvailability(costumeId: string) {
     if (!costumeId) return;
@@ -255,27 +257,44 @@ export default function EditRentalItemsForm({
       </button>
 
       {/* סיכום מחיר */}
-      <div className="grid gap-4 rounded-xl bg-gray-50 p-4 md:grid-cols-2">
-        <div>
-          <p className="text-sm text-gray-500">
-            מחיר לפני מע״מ
-          </p>
+     <div className="rounded-xl bg-gray-50 p-4">
+  <div>
+    <p className="text-sm text-gray-500">
+      מחיר לפני מע״מ
+    </p>
 
-          <p className="text-xl font-bold">
-            ₪{priceBeforeVat.toFixed(2)}
-          </p>
-        </div>
+    <p className="text-xl font-bold">
+      ₪{priceBeforeVat.toFixed(2)}
+    </p>
+  </div>
 
-        <div>
-          <p className="text-sm text-gray-500">
-            מחיר אחרי מע״מ
-          </p>
+  <label className="mt-4 flex cursor-pointer items-center gap-3 rounded-xl border border-gray-300 bg-white p-4">
+<input
+  type="checkbox"
+  name="add_vat"
+  value="true"
+  defaultChecked={addVatInitial}
+  onChange={(e) => setShowVat(e.target.checked)}
+  className="h-4 w-4"
+/>
 
-          <p className="text-xl font-bold">
-            ₪{priceAfterVat.toFixed(2)}
-          </p>
-        </div>
-      </div>
+    <span className="font-semibold">
+      הוסף מע״מ
+    </span>
+  </label>
+
+ {showVat && (
+    <div className="mt-4 border-t border-gray-200 pt-4">
+      <p className="text-sm text-gray-500">
+        מחיר אחרי מע״מ
+      </p>
+
+      <p className="text-xl font-bold">
+        ₪{priceAfterVat.toFixed(2)}
+      </p>
+    </div>
+  )}
+</div>
 
       <button
         type="submit"

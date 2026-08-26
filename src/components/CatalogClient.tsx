@@ -289,25 +289,25 @@ export default function CatalogClient({
           </p>
         </div>
       ) : (
-        <section className="grid grid-cols-2 gap-3">
+        <section className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 md:gap-5">
           {filteredCostumes.map((costume) => {
             const images = costume.images ?? [];
 
             return (
               <div
                 key={costume.id}
-                className="overflow-hidden rounded-xl border border-gray-200 bg-white p-2 shadow-sm"
+                className="overflow-hidden rounded-xl border border-gray-200 bg-white p-2 shadow-sm md:p-3"
               >
                 {/* גלריה קטנה בכרטיס */}
-                <div className="h-36 w-full overflow-x-auto overflow-y-hidden rounded-lg">
-                  <div className="flex h-36 snap-x snap-mandatory">
+                <div className="h-36 w-full overflow-x-auto overflow-y-hidden rounded-lg md:h-64">
+  <div className="flex h-36 snap-x snap-mandatory md:h-64">
                     {images.length > 0 ? (
                       images.map((image, index) => (
                         <img
                           key={`${image}-${index}`}
                           src={image}
                           alt={costume.name}
-                          className="h-36 min-w-full flex-shrink-0 snap-center object-cover"
+                          className="h-36 min-w-full flex-shrink-0 snap-center object-cover md:h-64"
                         />
                       ))
                     ) : (
@@ -335,17 +335,17 @@ export default function CatalogClient({
                   href={`/costume/${costume.slug}`}
                   className="block"
                 >
-                  <h2 className="mt-2 text-xs font-bold leading-tight">
+                  <h2 className="mt-2 text-xs font-bold leading-tight md:text-lg">
                     {costume.name}
                   </h2>
 
                   {costume.age_range && (
-                    <p className="mt-1 text-[11px] text-gray-500">
+                    <p className="text-[11px] text-gray-500 md:text-base">
                       {costume.age_range}
                     </p>
                   )}
 
-                  <p className="mt-1 text-[11px] text-gray-500">
+                  <p className="text-[11px] text-gray-500 md:text-base">
                     כמות: {costume.total_quantity}
                   </p>
                   {costume.rented_quantity > 0 && (
