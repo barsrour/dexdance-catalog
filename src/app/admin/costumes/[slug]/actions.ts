@@ -44,32 +44,48 @@ export async function updateCostume(
   );
 
   const { error } = await supabase
-    .from("costumes")
-    .update({
-      name,
-      total_quantity: totalQuantity,
-      age_range: String(formData.get("age_range") ?? "").trim(),
-      colors: splitValues(formData.get("colors")),
-      clothing_types: splitValues(
-        formData.get("clothing_types")
-      ),
-      styles: splitValues(formData.get("styles")),
-      location: String(formData.get("location") ?? "").trim(),
-      description: String(
-        formData.get("description") ?? ""
-      ).trim(),
-      images,
-      cover_image: images[0] ?? null,
-    })
-    .eq("slug", slug);
+  .from("costumes")
+  .update({
+    name,
+    total_quantity: totalQuantity,
 
-  if (error) {
-    throw new Error(error.message);
-  }
+    age_range: String(
+      formData.get("age_range") ?? ""
+    ).trim(),
 
-  revalidatePath(`/admin/costumes/${slug}`);
-  revalidatePath("/admin/costumes");
-  revalidatePath("/");
+    age_groups: formData
+      .getAll("age_groups")
+      .map(String),
+
+    categories: formData
+      .getAll("categories")
+      .map(String),
+
+    colors: formData
+      .getAll("colors")
+      .map(String),
+
+    clothing_types: formData
+      .getAll("clothing_types")
+      .map(String),
+
+    styles: formData
+      .getAll("styles")
+      .map(String),
+
+    location: String(
+      formData.get("location") ?? ""
+    ).trim(),
+
+    description: String(
+      formData.get("description") ?? ""
+    ).trim(),
+
+    images,
+
+    cover_image: images[0] ?? null,
+  })
+  .eq("slug", slug);
 }
 export async function deleteCostume(slug: string) {
   const supabase = await createClient();

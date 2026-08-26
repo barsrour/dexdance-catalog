@@ -4,6 +4,7 @@ import { useState } from "react";
 import CostumeImageUploader from "@/src/components/admin/CostumeImageUploader";
 import { updateCostume, deleteCostume } from "./actions";
 import DeleteCostumeButton from "./DeleteCostumeButton";
+import { filterOptions } from "@/data/costumes";
 
 type Costume = {
   id: string;
@@ -18,6 +19,7 @@ type Costume = {
   images: string[] | null;
   description: string | null;
   location: string | null;
+  categories: string[] | null;
 };
 
 type Props = {
@@ -72,61 +74,146 @@ export default function EditCostumeForm({
         />
       </div>
 
-      <div>
-        <label className="mb-2 block text-sm font-bold">
-          טווח גיל
-        </label>
+     <div>
+  <label className="mb-2 block text-sm font-bold">
+    קבוצות גיל
+  </label>
 
+  <div className="grid grid-cols-2 gap-2">
+    {filterOptions.ages.map((age) => (
+      <label
+        key={age}
+        className="flex items-center gap-2 rounded-lg border p-3"
+      >
         <input
-          name="age_range"
-          defaultValue={costume.age_range ?? ""}
-          className="w-full rounded-xl border border-gray-300 px-4 py-3"
+          type="checkbox"
+          name="age_groups"
+          value={age}
+          defaultChecked={
+            costume.age_groups?.includes(age) ?? false
+          }
         />
-      </div>
 
-      <div>
-        <label className="mb-2 block text-sm font-bold">
-          צבעים
-        </label>
+        {age}
+      </label>
+    ))}
+  </div>
+</div>
 
+     <div>
+  <label className="mb-2 block text-sm font-bold">
+    צבעים
+  </label>
+
+  <div className="grid grid-cols-2 gap-2">
+    {filterOptions.colors.map((color) => (
+      <label
+        key={color}
+        className="flex items-center gap-2 rounded-lg border p-3"
+      >
         <input
+          type="checkbox"
           name="colors"
-          defaultValue={(costume.colors ?? []).join(", ")}
-          placeholder="אדום, שחור, לבן"
-          className="w-full rounded-xl border border-gray-300 px-4 py-3"
+          value={color}
+          defaultChecked={
+            costume.colors?.includes(color) ?? false
+          }
         />
 
-        <p className="mt-1 text-xs text-gray-400">
-          הפרידי בין ערכים באמצעות פסיק.
-        </p>
-      </div>
-
+        {color}
+      </label>
+    ))}
+  </div>
+</div>
       <div>
-        <label className="mb-2 block text-sm font-bold">
-          סוגי בגד
-        </label>
+  <label className="mb-2 block text-sm font-bold">
+    סוג בגד
+  </label>
 
+  <div className="grid grid-cols-2 gap-2">
+    {filterOptions.clothingTypes.map((type) => (
+      <label
+        key={type}
+        className="flex items-center gap-2 rounded-lg border p-3"
+      >
         <input
+          type="checkbox"
           name="clothing_types"
-          defaultValue={(costume.clothing_types ?? []).join(", ")}
-          placeholder="חצאית, טופ"
-          className="w-full rounded-xl border border-gray-300 px-4 py-3"
+          value={type}
+          defaultChecked={
+            costume.clothing_types?.includes(type) ?? false
+          }
         />
-      </div>
 
+        {type}
+      </label>
+    ))}
+  </div>
+</div>
       <div>
-        <label className="mb-2 block text-sm font-bold">
-          סגנונות
-        </label>
+  <label className="mb-2 block text-sm font-bold">
+    סגנון
+  </label>
 
+  <div className="grid grid-cols-2 gap-2">
+    {filterOptions.styles.map((style) => (
+      <label
+        key={style}
+        className="flex items-center gap-2 rounded-lg border p-3"
+      >
         <input
+          type="checkbox"
           name="styles"
-          defaultValue={(costume.styles ?? []).join(", ")}
-          placeholder="ג׳אז, מודרני"
-          className="w-full rounded-xl border border-gray-300 px-4 py-3"
+          value={style}
+          defaultChecked={
+            costume.styles?.includes(style) ?? false
+          }
         />
-      </div>
 
+        {style}
+      </label>
+    ))}
+  </div>
+</div>
+<div>
+  <label className="mb-2 block text-sm font-bold">
+    קטגוריות
+  </label>
+
+  <div className="grid grid-cols-2 gap-2">
+    {[
+      ["upper", "חלק עליון"],
+      ["bodysuits", "בגדי גוף"],
+      ["tops", "טופים"],
+      ["shirts", "גופיות וחולצות"],
+      ["vests", "וסטים"],
+      ["jackets", "ג׳קטים"],
+      ["lower", "חלק תחתון"],
+      ["pants", "מכנסיים"],
+      ["skirts", "חצאיות"],
+      ["leggings", "טייצים"],
+      ["dresses", "שמלות"],
+      ["overol", "אוברול"],
+      ["sets", "סטים"],
+    ].map(([value, label]) => (
+      <label
+        key={value}
+        className="flex items-center gap-2 rounded-lg border p-3"
+      >
+        <input
+          type="checkbox"
+          name="categories"
+          value={value}
+          defaultChecked={
+            costume.categories?.includes(value) ?? false
+          }
+        />
+
+        {label}
+      </label>
+    ))}
+  </div>
+</div>
       <div>
         <label className="mb-2 block text-sm font-bold">
           מיקום במחסן
