@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { filterOptions } from "@/data/costumes";
 import ScrollToTopButton from "@/src/components/ScrollToTopButton";
+import RentalCartButton from "@/src/components/RentalCartButton";
 
 type Costume = {
   id: string;
@@ -35,7 +36,8 @@ export default function CatalogClient({
   const [type, setType] = useState("");
   const [style, setStyle] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-
+const hasRestoredCatalogState = useRef(false);
+const pendingScrollY = useRef<number | null>(null);
   const clearFilters = () => {
     setSearch("");
     setColor("");
@@ -44,6 +46,31 @@ export default function CatalogClient({
     setStyle("");
     setSelectedCategory("");
   };
+useEffect(() => {
+  const savedState = sessionStorage.getItem("dex-catalog-state");
+
+  if (!savedState) {
+    hasRestoredCatalogState.current = true;
+    return;
+  }
+
+  try {
+    const parsed = JSON.parse(savedState);
+
+    setSearch(parsed.search ?? "");
+    setColor(parsed.color ?? "");
+    setAge(parsed.age ?? "");
+    setType(parsed.type ?? "");
+    setStyle(parsed.style ?? "");
+    setSelectedCategory(parsed.selectedCategory ?? "");
+
+    pendingScrollY.current = Number(parsed.scrollY ?? 0);
+  } catch {
+    sessionStorage.removeItem("dex-catalog-state");
+  }
+
+  hasRestoredCatalogState.current = true;
+}, []);
 
   const filteredCostumes = useMemo(() => {
     return costumes.filter((costume) => {
@@ -107,29 +134,92 @@ export default function CatalogClient({
     style,
     selectedCategory,
   ]);
+useEffect(() => {
+  if (pendingScrollY.current === null) {
+    return;
+  }
 
+  const scrollY = pendingScrollY.current;
+
+  const timer = window.setTimeout(() => {
+    window.scrollTo({
+      top: scrollY,
+      behavior: "auto",
+    });
+
+    pendingScrollY.current = null;
+  }, 300);
+
+  return () => {
+    window.clearTimeout(timer);
+  };
+}, [filteredCostumes]);
+useEffect(() => {
+  const handleScroll = () => {
+    if (!hasRestoredCatalogState.current) return;
+
+    sessionStorage.setItem(
+      "dex-catalog-state",
+      JSON.stringify({
+        search,
+        color,
+        age,
+        type,
+        style,
+        selectedCategory,
+        scrollY: window.scrollY,
+      })
+    );
+  };
+
+  window.addEventListener("scroll", handleScroll, {
+    passive: true,
+  });
+
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, [
+  search,
+  color,
+  age,
+  type,
+  style,
+  selectedCategory,
+]);
   return (
     <main
       dir="rtl"
       className="min-h-screen bg-white px-4 py-5 text-black"
     >
       {/* כותרת ולוגו */}
-      <header className="mb-6 text-center">
-        <img
-          src="/logo.png"
-          alt="dex.dance"
-          className="mx-auto mb-3 w-28"
-        />
+      <header className="relative mb-6 text-center">
+        
+  <div className="absolute left-0 top-0">
+    <RentalCartButton />
+  </div>
+<div className="absolute right-0 top-0">
+  <Link
+    href="/admin/login/page.tsx"
+    className="inline-flex h-9 items-center justify-center rounded-full border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-500 shadow-sm transition hover:border-red-300 hover:text-red-600"
+  >
+    כניסת מנהלות
+  </Link>
+</div>
+  <img
+    src="/logo.png"
+    alt="dex.dance"
+    className="mx-auto mb-3 w-28"
+  />
 
-        <h1 className="text-2xl font-bold text-red-600">
-          קטלוג התלבושות
-        </h1>
+  <h1 className="text-2xl font-bold text-red-600">
+    קטלוג התלבושות
+  </h1>
 
-        <p className="mt-1 text-sm text-gray-500">
-          השכרת תלבושות מבית dex.dance
-        </p>
-      </header>
-
+  <p className="mt-1 text-sm text-gray-500">
+    השכרת תלבושות מבית dex.dance
+  </p>
+</header>
       {/* קטגוריות ראשיות */}
       <section className="mb-5 overflow-x-auto">
         <div className="flex gap-2 pb-1">
@@ -336,9 +426,23 @@ export default function CatalogClient({
 
                 {/* לחיצה על הפרטים פותחת את התלבושת */}
                 <Link
-                  href={`/costume/${costume.slug}`}
-                  className="block"
-                >
+  href={`/costume/${costume.slug}`}
+  onClick={() => {
+    sessionStorage.setItem(
+      "dex-catalog-state",
+      JSON.stringify({
+        search,
+        color,
+        age,
+        type,
+        style,
+        selectedCategory,
+        scrollY: window.scrollY,
+      })
+    );
+  }}
+  className="block"
+>
                   <h2 className="mt-2 text-xs font-bold leading-tight md:text-lg">
                     {costume.name}
                   </h2>

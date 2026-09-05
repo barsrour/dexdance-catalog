@@ -45,18 +45,21 @@ export default async function RentalPage({
 
   const { data: rental, error } = await supabase
     .from("rentals")
-    .select(`
-      id,
-      start_date,
-      end_date,
-      status,
-      price_before_vat,
-      price_after_vat,
-      add_vat,
-      is_paid,
-      notes,
-      created_at,
-
+   .select(`
+  id,
+  start_date,
+  end_date,
+  status,
+  price_before_vat,
+  price_after_vat,
+  add_vat,
+  is_paid,
+  notes,
+  request_source,
+  request_number,
+  created_at,
+has_availability_warning,
+availability_warning_details,
       customers (
         id,
         full_name,
@@ -110,6 +113,9 @@ const initialItems = (rental.rental_items ?? []).map(
       : rental.status === "cancelled"
       ? "בוטלה"
       : "הצעת מחיר";
+      const isNewCatalogRequest =
+  rental.request_source === "public_catalog" &&
+  rental.status === "quote";
 const { data: costumes } = await supabase
   .from("costumes")
   .select("id, name, total_quantity")
@@ -117,6 +123,82 @@ const { data: costumes } = await supabase
   .order("name");
   return (
     <div dir="rtl" className="space-y-6">
+      {rental.has_availability_warning && (
+  <div className="rounded-2xl border border-yellow-300 bg-yellow-50 p-5">
+    <p className="text-lg font-bold text-yellow-800">
+      ⚠️ הבקשה נשלחה למרות בעיית זמינות
+    </p>
+
+    <p className="mt-1 text-sm text-yellow-700">
+      הלקוחה בחרה להמשיך בשליחת הבקשה למרות שחלק מהכמות
+      לא הייתה זמינה בתאריכים שבחרה.
+    </p>
+
+    {Array.isArray(rental.availability_warning_details) &&
+      rental.availability_warning_details.length > 0 && (
+        <div className="mt-4 space-y-2">
+          {rental.availability_warning_details.map(
+            (warning: any, index: number) => (
+              <div
+                key={`${warning.costumeId}-${index}`}
+                className="rounded-xl bg-white/70 p-3"
+              >
+                <p className="font-bold text-yellow-900">
+                  {warning.costumeName ?? "תלבושת"}
+                </p>
+
+                <div className="mt-1 flex flex-wrap gap-4 text-sm text-yellow-800">
+                  <span>
+                    ביקשה:{" "}
+                    <strong>
+                      {warning.requestedQuantity}
+                    </strong>
+                  </span>
+
+                  <span>
+                    היה זמין:{" "}
+                    <strong>
+                      {warning.availableQuantity}
+                    </strong>
+                  </span>
+
+                  <span>
+                    חסר:{" "}
+                    <strong>
+                      {Math.max(
+                        Number(warning.requestedQuantity ?? 0) -
+                          Number(warning.availableQuantity ?? 0),
+                        0
+                      )}
+                    </strong>
+                  </span>
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      )}
+  </div>
+)}
+        {isNewCatalogRequest && (
+  <div className="rounded-2xl border border-blue-200 bg-blue-50 p-5">
+    <div className="flex items-start gap-3">
+      <span className="text-2xl">🛒</span>
+
+      <div>
+        <p className="text-lg font-bold text-blue-800">
+          בקשה חדשה מהקטלוג
+        </p>
+
+        <p className="mt-1 text-sm text-blue-700">
+          הלקוחה בנתה בקשת השכרה דרך הקטלוג הציבורי.
+          בדקי את הפריטים, הכמויות והתאריכים,
+          הזיני מחירים ולאחר הטיפול עדכני את הסטטוס.
+        </p>
+      </div>
+    </div>
+  </div>
+)}
       {/* כותרת */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
@@ -130,7 +212,16 @@ const { data: costumes } = await supabase
           <h1 className="text-3xl font-bold">
             {customer?.full_name ?? "השכרה"}
           </h1>
-
+          {rental.request_number && (
+  <p className="mt-1 font-semibold text-gray-600">
+    בקשה #{rental.request_number}
+  </p>
+)}
+{isNewCatalogRequest && (
+  <p className="mt-1 font-semibold text-blue-600">
+    בקשה להצעת מחיר מהקטלוג
+  </p>
+)}
           <p className="mt-1 text-gray-500">
              {(() => {
   const date = formatDateParts(rental.start_date);

@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/src/utils/supabase/server";
 import ImageGallery from "@/src/components/ImagesGallery";
+import AddToRentalRequestButton from "@/src/components/AddToRentalRequestButton";
+import RentalCartButton from "@/src/components/RentalCartButton";
 
 export default async function CostumePage({
   params,
@@ -59,13 +61,16 @@ const rentedUntil =
       dir="rtl"
       className="min-h-screen bg-white px-5 py-6 text-black"
     >
-      <Link
-        href="/"
-        className="mb-5 inline-block text-sm font-semibold text-red-600"
-      >
-        ← חזרה לקטלוג
-      </Link>
+      <div className="mb-5 flex items-center justify-between">
+  <Link
+    href="/"
+    className="text-sm font-semibold text-red-600"
+  >
+    ← חזרה לקטלוג
+  </Link>
 
+  <RentalCartButton />
+</div>
       <ImageGallery
         images={images}
         name={costume.name}
@@ -236,7 +241,15 @@ const rentedUntil =
       </p>
     </div>
   )}
+
 </section>
+  <AddToRentalRequestButton
+  costumeId={costume.id}
+  slug={costume.slug}
+  name={costume.name}
+  image={images[0] ?? null}
+  availableQuantity={availableQuantity}
+/>
       </section>
     </main>
   );

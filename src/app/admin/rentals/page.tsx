@@ -26,15 +26,18 @@ export default async function RentalsPage() {
   const { data: rentals, error } = await supabase
     .from("rentals")
     .select(`
-      id,
-      start_date,
-      end_date,
-      status,
-      price_before_vat,
-      price_after_vat,
-      is_paid,
-      notes,
-      created_at,
+    id,
+  start_date,
+  end_date,
+  status,
+  price_before_vat,
+  price_after_vat,
+  is_paid,
+  notes,
+  request_source,
+  request_number,
+  created_at,
+  has_availability_warning,
       customers (
         full_name,
         phone
@@ -51,8 +54,12 @@ export default async function RentalsPage() {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("Rentals error:", error);
-
+  console.error("Rentals error:", {
+    message: error.message,
+    details: error.details,
+    hint: error.hint,
+    code: error.code,
+  });
     return (
       <div dir="rtl">
         <h1 className="text-3xl font-bold">השכרות</h1>
@@ -96,12 +103,39 @@ export default async function RentalsPage() {
               key={rental.id}
               className="rounded-2xl bg-white p-5 shadow-sm"
             >
+            {rental.request_source === "public_catalog" &&
+  rental.status === "quote" && (
+  <div className="mb-4 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3">
+    <p className="font-bold text-blue-700">
+      🛒 בקשה חדשה מהקטלוג
+    </p>
+
+    <p className="mt-1 text-xs text-blue-600">
+      הלקוחה שלחה בקשה להצעת מחיר דרך הקטלוג הציבורי
+    </p>
+    {rental.has_availability_warning && (
+  <div className="mb-4 rounded-xl border border-yellow-300 bg-yellow-50 px-4 py-3">
+    <p className="font-bold text-yellow-800">
+      ⚠️ נשלחה למרות חוסר זמינות
+    </p>
+
+    <p className="mt-1 text-xs text-yellow-700">
+      הלקוחה קיבלה התראת זמינות ובחרה לשלוח את הבקשה בכל זאת.
+    </p>
+  </div>
+)}
+  </div>
+)}
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <h2 className="text-xl font-bold">
                     {rental.customers?.full_name ?? "לקוחה ללא שם"}
                   </h2>
-
+{rental.request_number && (
+  <p className="mt-1 text-sm font-bold text-gray-700">
+    בקשה #{rental.request_number}
+  </p>
+)}
                   {rental.customers?.phone && (
                     <p className="mt-1 text-sm text-gray-500">
                       {rental.customers.phone}
@@ -237,12 +271,14 @@ export default async function RentalsPage() {
 <div className="flex flex-wrap gap-4 mt-5">
   
   <div className="flex flex-wrap gap-4">
-  <Link
-    href={`/admin/rentals/${rental.id}`}
-    className="rounded-xl bg-red-600 px-4 py-2 font-semibold text-white"
-  >
-    פתיחת השכרה
-  </Link>
+<Link
+  href={`/admin/rentals/${rental.id}`}
+  className="rounded-xl bg-red-600 px-4 py-2 font-semibold text-white"
+>
+  {rental.request_source === "public_catalog"
+    ? "פתיחת הבקשה"
+    : "פתיחת השכרה"}
+</Link>
 
   <Link
     href={`/admin/rentals/${rental.id}/document`}
