@@ -13,9 +13,9 @@ export default async function LoginPage({
 
   return (
     <main
-      dir="rtl"
-      className="flex min-h-screen items-center justify-center bg-gray-100 px-4"
-    >
+  dir="rtl"
+  className="flex min-h-screen items-center justify-center bg-gray-100 px-4 text-black"
+>
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
         <h1 className="mb-2 text-center text-3xl font-bold">
           כניסה לניהול
@@ -46,7 +46,7 @@ export default async function LoginPage({
               type="email"
               required
               autoComplete="email"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-black"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-black outline-none focus:border-black"
             />
           </div>
 
@@ -64,7 +64,7 @@ export default async function LoginPage({
               type="password"
               required
               autoComplete="current-password"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-black"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-black outline-none focus:border-black"
             />
           </div>
 
