@@ -1,54 +1,13 @@
-import { redirect } from "next/navigation";
+import "./globals.css";
 
-import AdminSidebar from "@/src/components/admin/AdminSidebar";
-import { createClient } from "@/src/utils/supabase/server";
-
-const ALLOWED_ADMIN_EMAILS =
-  process.env.ADMIN_EMAILS
-    ?.split(",")
-    .map((email) => email.trim().toLowerCase()) ?? [];
-
-export default async function AdminLayout({
+export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login");
-  }
-
-  const userEmail = user.email?.toLowerCase();
-
-  const isAllowedAdmin = ALLOWED_ADMIN_EMAILS.some(
-    (email) => email.toLowerCase() === userEmail
-  );
-
-  if (!isAllowedAdmin) {
-    await supabase.auth.signOut();
-
-    redirect(
-      "/login?error=אין למשתמש הזה הרשאה להיכנס למערכת הניהול"
-    );
-  }
-
+}>) {
   return (
-    <div
-      dir="rtl"
-      className="min-h-screen bg-gray-100 text-black"
-    >
-      <div className="md:flex">
-        <AdminSidebar />
-
-        <main className="min-w-0 flex-1 p-4 md:p-8">
-          {children}
-        </main>
-      </div>
-    </div>
+    <html lang="he" dir="rtl">
+      <body>{children}</body>
+    </html>
   );
 }

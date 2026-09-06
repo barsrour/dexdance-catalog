@@ -1,34 +1,97 @@
-import { redirect } from "next/navigation";
+import CatalogClient from "@/src/components/CatalogClient";
 import { createClient } from "@/src/utils/supabase/server";
 
-export default async function AdminPage() {
+export default async function HomePage() {
   const supabase = await createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: costumes, error } = await supabase
+    .from("costumes")
+    .select(`
+      id,
+      slug,
+      name,
+      total_quantity,
+      age_range,
+      age_groups,
+      categories,
+      images,
+      colors,
+      clothing_types,
+      styles,
+      search_keywords,
+      extra_search_keywords
+    `)
+    .eq("is_active", true)
+    .order("name");
 
-  if (!user) {
-    redirect("/login");
+  if (error) {
+    return (
+      <main
+        dir="rtl"
+        className="min-h-screen bg-white p-6 text-black"
+      >
+        <p className="text-center text-red-600">
+          שגיאה בטעינת הקטלוג
+        </p>
+      </main>
+    );
   }
 
+  const {
+    data: availabilityData,
+    error: availabilityError,
+  } = await supabase.rpc(
+    "get_current_costume_availability"
+  );
+
+  if (availabilityError) {
+    console.error(
+      "Availability error:",
+      availabilityError
+    );
+  }
+
+  type AvailabilityRow = {
+    costume_id: string;
+    rented_quantity: number | string | null;
+    available_quantity: number | string | null;
+    rented_until: string | null;
+  };
+
+  const availabilityMap = new Map<
+    string,
+    AvailabilityRow
+  >(
+    ((availabilityData ?? []) as AvailabilityRow[]).map(
+      (item) => [item.costume_id, item]
+    )
+  );
+
+  const costumesWithAvailability =
+    (costumes ?? []).map((costume) => {
+      const availability =
+        availabilityMap.get(costume.id);
+
+      return {
+        ...costume,
+
+        rented_quantity: Number(
+          availability?.rented_quantity ?? 0
+        ),
+
+        available_quantity: Number(
+          availability?.available_quantity ??
+            costume.total_quantity
+        ),
+
+        rented_until:
+          availability?.rented_until ?? null,
+      };
+    });
+
   return (
-    <main dir="rtl" className="min-h-screen bg-gray-100 p-6">
-      <div className="mx-auto max-w-5xl">
-        <h1 className="text-3xl font-bold">אזור ניהול</h1>
-
-        <p className="mt-2 text-gray-600">
-          התחברת בהצלחה בתור {user.email}
-        </p>
-
-        <div className="mt-8 rounded-2xl bg-white p-6 shadow">
-          <h2 className="text-xl font-bold">המערכת מחוברת</h2>
-
-          <p className="mt-2 text-gray-600">
-            מכאן ננהל תלבושות, לקוחות, הצעות מחיר והשכרות.
-          </p>
-        </div>
-      </div>
-    </main>
+    <CatalogClient
+      costumes={costumesWithAvailability}
+    />
   );
 }

@@ -200,11 +200,11 @@ useEffect(() => {
   </div>
 <div className="absolute right-0 top-0">
   <Link
-    href="/admin/login/page.tsx"
-    className="inline-flex h-9 items-center justify-center rounded-full border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-500 shadow-sm transition hover:border-red-300 hover:text-red-600"
-  >
-    כניסת מנהלות
-  </Link>
+  href="/login"
+  className="inline-flex h-9 items-center justify-center rounded-full border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-500 shadow-sm transition hover:border-red-300 hover:text-red-600"
+>
+  כניסת מנהלות
+</Link>
 </div>
   <img
     src="/logo.png"
