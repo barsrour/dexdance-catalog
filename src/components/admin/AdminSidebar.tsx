@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function AdminSidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,16 +64,27 @@ export default function AdminSidebar() {
     ☰
   </button>
 
-  <span className="font-bold">
-    dex.dance Admin
-  </span>
+  <Image
+  src="/logo.png"
+  alt="dex.dance"
+  width={120}
+  height={60}
+  className="h-auto w-28"
+/>
 </div>
 
       {/* Sidebar בדסקטופ */}
       <aside className="hidden min-h-screen w-64 flex-shrink-0 bg-zinc-900 p-6 text-white md:block">
-        <h1 className="mb-8 text-2xl font-bold">
-          dex.dance
-        </h1>
+        <div className="mb-8">
+  <Image
+    src="/logo.png"
+    alt="dex.dance"
+    width={160}
+    height={80}
+    className="h-auto w-40"
+    priority
+  />
+</div>
 
         {menu}
       </aside>
@@ -94,10 +106,13 @@ export default function AdminSidebar() {
         }`}
       >
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-xl font-bold">
-            dex.dance
-          </h1>
-
+         <Image
+  src="/logo.png"
+  alt="dex.dance"
+  width={120}
+  height={60}
+  className="h-auto w-28"
+/>
           <button
             type="button"
             onClick={() => setIsOpen(false)}
